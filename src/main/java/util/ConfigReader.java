@@ -7,10 +7,10 @@ import java.util.Properties;
 public class ConfigReader {
     private static ConfigReader instance;
     private static final Properties properties=new Properties();
-    private static final String testdataFilePath="C:\\Users\\Rowl\\Documents\\Playwright\\PlaywrightJavaProject\\src\\test\\resources\\TestData.properties";
+    //private static final String testdataFilePath="src/test/resources/TestData.properties";
 
     private ConfigReader(){
-        try(FileInputStream fileInputStream=new FileInputStream(testdataFilePath)){
+        try(FileInputStream fileInputStream=new FileInputStream("src/test/resources/TestData.properties")){
             properties.load(fileInputStream);
         }catch(IOException e){
             System.out.println("Failed to load properties file");
