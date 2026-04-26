@@ -109,4 +109,45 @@ public class MyInfoTest extends BaseTest {
         System.out.println("[TC-002] Employee full name updated successfully: "
                 + firstName + " " + middleName + " " + lastName);
     }
+
+    // TC-003: Verify required validation appears when required full name fields are empty
+    @Test(description = "TC-003: Verify required validation for empty full name fields")
+    public void requiredValidationForEmptyFullNameFieldsVerification() {
+        LoginPage loginPage = new LoginPage(page);
+        MyInfoPage myInfoPage = new MyInfoPage(page);
+
+        loginPage.userLogin(
+                configReader.getProperty("admin.username"),
+                configReader.getProperty("admin.password")
+        );
+
+        page.waitForURL("**/dashboard/**");
+        Assert.assertTrue(
+                page.url().contains("dashboard"),
+                "[TC-003] Login failed. Current URL: " + page.url()
+        );
+
+        myInfoPage.clickMyInfoMenu();
+
+        page.waitForURL("**/pim/viewPersonalDetails/**");
+        Assert.assertTrue(
+                page.url().contains("viewPersonalDetails"),
+                "[TC-003] My Info Personal Details page did not open. Current URL: " + page.url()
+        );
+
+        Assert.assertTrue(
+                myInfoPage.isPersonDetailHeaderVisible(),
+                "[TC-003] Personal Details header is not visible"
+        );
+
+        myInfoPage.clearRequiredFullNameFields();
+        myInfoPage.clickPersonalDetailsSaveButton();
+
+        Assert.assertTrue(
+                myInfoPage.areRequiredValidationMessagesVisible(),
+                "[TC-003] Required validation messages were not displayed for empty full name fields"
+        );
+
+        System.out.println("[TC-003] Required validation messages displayed correctly for empty full name fields.");
+    }
 }
