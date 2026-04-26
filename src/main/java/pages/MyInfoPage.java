@@ -14,6 +14,7 @@ public class MyInfoPage extends BasePage {
     private final Locator lastNameInput;
     private final Locator personalDetailsSaveButton;
     private final Locator successMessage;
+    private final Locator requiredValidationMessage;
 
     public MyInfoPage(Page page) {
         super(page);
@@ -25,6 +26,8 @@ public class MyInfoPage extends BasePage {
         this.personalDetailsSaveButton = page.locator("button[type='submit']:has-text('Save')").first();
         this.successMessage = page.locator(".oxd-toast").filter(
                 new Locator.FilterOptions().setHasText("Successfully Updated"));
+
+        this.requiredValidationMessage = page.locator(".oxd-input-field-error-message:has-text('Required')");
     }
 
     public void clickMyInfoMenu() {
@@ -41,6 +44,7 @@ public class MyInfoPage extends BasePage {
 
         return personalDetailHeader.isVisible();
     }
+
     public void updateFullName(String firstName, String middleName, String lastName) {
         firstNameInput.waitFor(
                 new Locator.WaitForOptions()
@@ -56,6 +60,25 @@ public class MyInfoPage extends BasePage {
 
         lastNameInput.press("Control+A");
         lastNameInput.fill(lastName);
+    }
+
+    public void clearRequiredFullNameFields() {
+        firstNameInput.click();
+        firstNameInput.press("Control+A");
+        firstNameInput.press("Backspace");
+
+        lastNameInput.click();
+        lastNameInput.press("Control+A");
+        lastNameInput.press("Backspace");
+    }
+
+    public boolean areRequiredValidationMessagesVisible() {
+        requiredValidationMessage.first().waitFor(
+                new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(10000)
+        );
+        return requiredValidationMessage.count() >= 2;
     }
 
     public void clickPersonalDetailsSaveButton() {
