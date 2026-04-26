@@ -64,12 +64,12 @@ public class MyInfoTest extends BaseTest {
         page.waitForURL("**/dashboard/**");
         Assert.assertTrue(
                 page.url().contains("dashboard"),
-                "[TC-002] Login failed. Current URL: " + page.url()
+                 "[TC-002] Login failed. Current URL: " + page.url()
         );
 
         myInfoPage.clickMyInfoMenu();
 
-        page.waitForURL("**/pim/viewPersonalDetails/**");
+        page.waitForURL("**/viewPersonalDetails/**");
         Assert.assertTrue(
                 page.url().contains("viewPersonalDetails"),
                 "[TC-002] My Info Personal Details page did not open. Current URL: " + page.url()
