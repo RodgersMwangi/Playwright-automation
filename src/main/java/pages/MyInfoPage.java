@@ -9,11 +9,22 @@ public class MyInfoPage extends BasePage {
 
     private final Locator myInfoMenu;
     private final Locator personalDetailHeader;
+    private final Locator firstNameInput;
+    private final Locator middleNameInput;
+    private final Locator lastNameInput;
+    private final Locator personalDetailsSaveButton;
+    private final Locator successMessage;
 
     public MyInfoPage(Page page) {
         super(page);
         this.myInfoMenu = page.getByText("My Info");
         this.personalDetailHeader = page.locator("h6:has-text('Personal Details')");
+        this.firstNameInput = page.getByPlaceholder("First Name");
+        this.middleNameInput = page.getByPlaceholder("Middle Name");
+        this.lastNameInput = page.getByPlaceholder("Last Name");
+        this.personalDetailsSaveButton = page.locator("button[type='submit']:has-text('Save')").first();
+        this.successMessage = page.locator(".oxd-toast").filter(
+                new Locator.FilterOptions().setHasText("Successfully Updated"));
     }
 
     public void clickMyInfoMenu() {
@@ -29,5 +40,46 @@ public class MyInfoPage extends BasePage {
         );
 
         return personalDetailHeader.isVisible();
+    }
+    public void updateFullName(String firstName, String middleName, String lastName) {
+        firstNameInput.waitFor(
+                new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(10000)
+        );
+
+        firstNameInput.press("Control+A");
+        firstNameInput.fill(firstName);
+
+        middleNameInput.press("Control+A");
+        middleNameInput.fill(middleName);
+
+        lastNameInput.press("Control+A");
+        lastNameInput.fill(lastName);
+    }
+
+    public void clickPersonalDetailsSaveButton() {
+        personalDetailsSaveButton.click();
+    }
+
+    public boolean isSuccessMessageVisible() {
+        successMessage.waitFor(
+                new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(10000)
+        );
+        return successMessage.isVisible();
+    }
+
+    public String getFirstNameValue() {
+        return firstNameInput.inputValue();
+    }
+
+    public String getMiddleNameValue() {
+        return middleNameInput.inputValue();
+    }
+
+    public String getLastNameValue() {
+        return lastNameInput.inputValue();
     }
 }
