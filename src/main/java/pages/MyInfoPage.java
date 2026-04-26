@@ -3,6 +3,7 @@ package pages;
 import base.BasePage;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class MyInfoPage extends BasePage {
@@ -15,6 +16,8 @@ public class MyInfoPage extends BasePage {
     private final Locator personalDetailsSaveButton;
     private final Locator successMessage;
     private final Locator requiredValidationMessage;
+    private final Locator employeeIdInput;
+    private final Locator otherIdInput;
 
     public MyInfoPage(Page page) {
         super(page);
@@ -28,6 +31,8 @@ public class MyInfoPage extends BasePage {
                 new Locator.FilterOptions().setHasText("Successfully Updated"));
 
         this.requiredValidationMessage = page.locator(".oxd-input-field-error-message:has-text('Required')");
+        this.employeeIdInput = page.getByRole(AriaRole.TEXTBOX).nth(4);
+        this.otherIdInput = page.getByRole(AriaRole.TEXTBOX).nth(5);
     }
 
     public void clickMyInfoMenu() {
@@ -106,5 +111,29 @@ public class MyInfoPage extends BasePage {
 
     public String getLastNameValue() {
         return lastNameInput.inputValue();
+    }
+
+    public void updateEmployeeIdFields(String employeeId, String otherId) {
+        employeeIdInput.waitFor(
+                new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(10000)
+        );
+
+        employeeIdInput.click();
+        employeeIdInput.press("Control+A");
+        employeeIdInput.fill(employeeId);
+
+        otherIdInput.click();
+        otherIdInput.press("Control+A");
+        otherIdInput.fill(otherId);
+    }
+
+    public String getEmployeeIdValue() {
+        return employeeIdInput.inputValue();
+    }
+
+    public String getOtherIdValue() {
+        return otherIdInput.inputValue();
     }
 }
