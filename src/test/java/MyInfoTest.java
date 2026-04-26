@@ -150,4 +150,61 @@ public class MyInfoTest extends BaseTest {
 
         System.out.println("[TC-003] Required validation messages displayed correctly for empty full name fields.");
     }
+    // TC-004: Verify Admin user can update Employee Id and Other Id fields
+    @Test(description = "TC-004: Verify Admin can update Employee Id and Other Id")
+    public void updateEmployeeIdAndOtherIdVerification() {
+        LoginPage loginPage = new LoginPage(page);
+        MyInfoPage myInfoPage = new MyInfoPage(page);
+
+        int randomNumber = ThreadLocalRandom.current().nextInt(1000, 9999);
+        String employeeId = "EMP" + randomNumber;
+        String otherId = "OTH" + randomNumber;
+
+        loginPage.userLogin(
+                configReader.getProperty("admin.username"),
+                configReader.getProperty("admin.password")
+        );
+
+        page.waitForURL("**/dashboard/**");
+        Assert.assertTrue(
+                page.url().contains("dashboard"),
+                "[TC-004] Login failed. Current URL: " + page.url()
+        );
+
+        myInfoPage.clickMyInfoMenu();
+
+        page.waitForURL("**/viewPersonalDetails/**");
+        Assert.assertTrue(
+                page.url().contains("viewPersonalDetails"),
+                "[TC-004] My Info Personal Details page did not open. Current URL: " + page.url()
+        );
+
+        Assert.assertTrue(
+                myInfoPage.isPersonDetailHeaderVisible(),
+                "[TC-004] Personal Details header is not visible"
+        );
+
+        myInfoPage.updateEmployeeIdFields(employeeId, otherId);
+        myInfoPage.clickPersonalDetailsSaveButton();
+
+        Assert.assertTrue(
+                myInfoPage.isSuccessMessageVisible(),
+                "[TC-004] Success message was not displayed after saving Employee Id fields"
+        );
+
+        Assert.assertEquals(
+                myInfoPage.getEmployeeIdValue(),
+                employeeId,
+                "[TC-004] Employee Id was not updated correctly"
+        );
+
+        Assert.assertEquals(
+                myInfoPage.getOtherIdValue(),
+                otherId,
+                "[TC-004] Other Id was not updated correctly"
+        );
+
+        System.out.println("[TC-004] Employee Id and Other Id updated successfully: "
+                + employeeId + " / " + otherId);
+    }
 }
