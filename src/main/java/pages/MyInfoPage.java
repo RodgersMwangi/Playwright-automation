@@ -20,14 +20,16 @@ public class MyInfoPage extends BasePage {
         super(page);
         this.myInfoMenu = page.getByText("My Info");
         this.personalDetailHeader = page.locator("h6:has-text('Personal Details')");
-        this.firstNameInput = page.getByPlaceholder("First Name");
-        this.middleNameInput = page.getByPlaceholder("Middle Name");
-        this.lastNameInput = page.getByPlaceholder("Last Name");
-        this.personalDetailsSaveButton = page.locator("button[type='submit']:has-text('Save')").first();
+        // Scope the full name inputs to the Personal Details section to avoid matching other inputs on the page
+        Locator personalDetailsSection = page.locator("div:has(h6:has-text('Personal Details'))");
+        this.firstNameInput = personalDetailsSection.getByPlaceholder("First Name");
+        this.middleNameInput = personalDetailsSection.getByPlaceholder("Middle Name");
+        this.lastNameInput = personalDetailsSection.getByPlaceholder("Last Name");
+        this.personalDetailsSaveButton = personalDetailsSection.locator("button[type='submit']:has-text('Save')").first();
         this.successMessage = page.locator(".oxd-toast").filter(
                 new Locator.FilterOptions().setHasText("Successfully Updated"));
 
-        this.requiredValidationMessage = page.locator(".oxd-input-field-error-message:has-text('Required')");
+        this.requiredValidationMessage = personalDetailsSection.locator(".oxd-input-field-error-message:has-text('Required')");
     }
 
     public void clickMyInfoMenu() {
