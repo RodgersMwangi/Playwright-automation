@@ -34,15 +34,21 @@ public class AddAdminUserTest extends BaseTest {
         userManagementPage.fillDetails(userRole, employeeNameHint, employee_name, statusDropdown,user_Name, userPassword);
     }
     @Test
-    public void addAdminUser(){
+    public void addAdminUser(){ //Test 1: adding a new admin user
         adminCreation(userName);
+        try {
+            page.getByText("exists").waitFor(new Locator.WaitForOptions().setTimeout(10000));
+            System.out.println("User " + userName + " already exists");
+        } catch (com.microsoft.playwright.TimeoutError e) {
+            // If it doesn't appear, just continue
+        }
         assertThat(page.getByText(userName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
 
     }
 
     @Test
     public void userAlreadyExist(){
-        //tests an existing user
+        //Test 2: tests an existing user
         adminCreation(existingUserName);
         assertThat(page.getByText("exists")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
     }
