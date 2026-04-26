@@ -1,3 +1,5 @@
+package tests;
+
 import base.BaseTest;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import org.testng.annotations.Test;
