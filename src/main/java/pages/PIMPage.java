@@ -14,7 +14,6 @@ public class PIMPage extends BasePage {
     private final Locator strEmployeeId;
     private final Locator btnSave;
     private final Locator employeeListLink;
-    //private final Locator errorMessage;
     private final Locator btnAddEmployee;
 
 
@@ -27,7 +26,6 @@ public class PIMPage extends BasePage {
         this.strEmployeeId = page.locator("//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']");
         this.btnSave = page.locator("button[type='submit']");
         this.employeeListLink=page.getByRole(AriaRole.LINK,new Page.GetByRoleOptions().setName("Employee List"));
-        //this.errorMessage=page.getByText("Required", new Page.GetByTextOptions().setExact(true));
         this.btnAddEmployee=page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add"));
     }
 
@@ -67,6 +65,12 @@ public class PIMPage extends BasePage {
         );
     }
 
+    public Locator getLengthError(String message) {
+        return page.locator("span")
+                .filter(new Locator.FilterOptions().setHasText(message))
+                .first();
+    }
+
     public void saveEmployeeDetails(String firstName, String middleName, String lastName,String id){
         enterFirstName(firstName);
         enterMiddleName(middleName);
@@ -74,9 +78,6 @@ public class PIMPage extends BasePage {
         enterEmployeeID(id);
         clickSaveButton();
     }
-
-
-
 
     public void saveEmployeeDetails(String firstName, String middleName, String id){
         enterFirstName(firstName);
