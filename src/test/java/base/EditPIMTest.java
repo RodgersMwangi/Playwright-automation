@@ -10,6 +10,9 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public class EditPIMTest extends BaseTest {
     @Test
     public void testWithValidCredentials(){
+        LoginPage loginPage=new LoginPage(page);
+        loginPage.userLogin(configReader.getProperty("admin.username"),configReader.getProperty("admin.password"));
+
         EditPIMPage editPIMPage = new EditPIMPage(page);
         editPIMPage.editContactDetails();
     }
