@@ -12,7 +12,5 @@ public class EditPIMTest extends BaseTest {
     public void testWithValidCredentials(){
         EditPIMPage editPIMPage = new EditPIMPage(page);
         editPIMPage.editContactDetails();
-
-
     }
 }
