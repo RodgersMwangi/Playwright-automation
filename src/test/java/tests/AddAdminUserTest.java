@@ -1,3 +1,5 @@
+package tests;
+
 import base.BaseTest;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -7,6 +9,7 @@ import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.UserManagementPage;
 import util.ConfigReader;
+import util.DataFaker;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -17,9 +20,9 @@ public class AddAdminUserTest extends BaseTest {
     String employee_name= configReader.getProperty("employee.name");
     String employeeNameHint=configReader.getProperty("employeeName.hint");
     String statusDropdown=configReader.getProperty("adduser.status.dropdown");
-    String userName=configReader.getProperty("adduser.username");
+    String userName= DataFaker.FAKER.name().firstName();;
     String existingUserName=configReader.getProperty("existingEmployee");
-    String userPassword=configReader.getProperty("adduser.password");
+    String userPassword=DataFaker.FAKER.regexify("[A-Z]{1}[a-z]{5}[0-9]{2}[@#$%]{1}");;
 
 
     public void adminCreation(String user_Name){
