@@ -197,4 +197,61 @@ public class MyInfoTest extends BaseTest {
         System.out.println("[TC-004] Employee Id and Other Id updated successfully: "
                 + employeeId + " / " + otherId);
     }
+
+    // TC-005: Verify Admin user can update Driver's License Number and License Expiry Date
+    @Test(description = "TC-005: Verify Admin can update Driver's License Number and License Expiry Date")
+    public void updateDriverLicenseAndExpiryDateVerification() {
+        LoginPage loginPage = new LoginPage(page);
+        MyInfoPage myInfoPage = new MyInfoPage(page);
+
+
+        String licenseNumber = "DL" + DataFaker.FAKER.regexify("[0-9]{7}");
+
+
+        String expiryDate = DataFaker.FAKER.regexify("202[7-9]-(0[1-9]|[12][0-9]|30)-(0[1-9]|1[0-2])");
+
+        loginPage.userLogin(
+                configReader.getProperty("admin.username"),
+                configReader.getProperty("admin.password")
+        );
+
+        page.waitForURL("**/dashboard/**");
+        Assert.assertTrue(
+                page.url().contains("dashboard"),
+                "[TC-005] Login failed. Current URL: " + page.url()
+        );
+
+        myInfoPage.clickMyInfoMenu();
+        page.waitForURL("**/viewPersonalDetails/**");
+
+        Assert.assertTrue(
+                page.url().contains("viewPersonalDetails"),
+                "[TC-005] My Info Personal Details page did not open. Current URL: " + page.url()
+        );
+        Assert.assertTrue(
+                myInfoPage.isPersonDetailHeaderVisible(),
+                "[TC-005] Personal Details header is not visible"
+        );
+
+        myInfoPage.updateDriverLicenseFields(licenseNumber, expiryDate);
+        myInfoPage.clickPersonalDetailsSaveButton();
+
+        Assert.assertTrue(
+                myInfoPage.isSuccessMessageVisible(),
+                "[TC-005] Success message was not displayed after saving Driver's License fields"
+        );
+        Assert.assertEquals(
+                myInfoPage.getDriverLicenseValue(),
+                licenseNumber,
+                "[TC-005] Driver's License Number was not updated correctly"
+        );
+        Assert.assertEquals(
+                myInfoPage.getLicenseExpiryDateValue(),
+                expiryDate,
+                "[TC-005] License Expiry Date was not updated correctly"
+        );
+
+        System.out.println("[TC-005] Driver's License and Expiry Date updated successfully: "
+                + licenseNumber + " / " + expiryDate);
+    }
 }
