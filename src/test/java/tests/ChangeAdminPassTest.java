@@ -6,6 +6,8 @@ import pages.MyInfoPage;
 import util.ConfigReader;
 
 public class ChangeAdminPassTest extends BaseTest {
+    ConfigReader configReader = ConfigReader.getInstance();
+
 
     @Test
     public void changeAdminPasswordTest() {
@@ -14,8 +16,8 @@ public class ChangeAdminPassTest extends BaseTest {
 
         // Step 1: Login
         loginPage.userLogin(
-                ConfigReader.get("admin.username"),
-                ConfigReader.get("admin.password")
+                configReader.getProperty("admin.username"),
+                configReader.getProperty("admin.password")
         );
 
         MyInfoPage myInfoPage = new MyInfoPage(page);
@@ -26,13 +28,13 @@ public class ChangeAdminPassTest extends BaseTest {
 
         // Step 3: Change password
         myInfoPage.changePassword(
-                ConfigReader.get("admin.password"),
-                ConfigReader.get("admin.newPassword")
+                configReader.getProperty("admin.password"),
+                configReader.getProperty("admin.newPassword")
         );
 
         // Step 4: Assertion
         Assert.assertTrue(
-                myInfoPage.isSuccessMessageVisible(),
+                myInfoPage.issuccessMessageVisible(),
                 "Password change failed!"
         );
     }

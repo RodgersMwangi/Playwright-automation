@@ -158,8 +158,8 @@ public class MyInfoPage extends BasePage {
         page.locator("button:has-text('Save')").click();
     }
 
-    public boolean isSuccessMessageVisible() {
-        var success = page.locator("p:has-text('Success')");
+    public boolean issuccessMessageVisible() {
+        var success = page.locator("p:has-text('Successfully')");
         success.waitFor();
         return success.isVisible();
     }
