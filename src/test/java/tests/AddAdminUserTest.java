@@ -108,9 +108,7 @@ public class AddAdminUserTest extends BaseTest {
 
     @Test(dataProvider = "emptyFieldProvider")
     public void validateEmptyFields(String role, String hint, String name, String status, String user, String pass, String confirm, String errorMsg) {
-
-        //loggingIn();
-        //employeeCreation();
+        //Test 4: tests for empty fields
         btnAdminModule.click();
         assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("User Management"))).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
         userManagementPage.fillDetails(role, hint, name, status,user, pass, confirm);
