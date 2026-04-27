@@ -42,18 +42,24 @@ public class UserManagementPage extends BasePage {
 
     }
 
-    public void fillDetails(String userRole, String employeeNameHint, String employee_Name, String status, String _username, String pass_word){
+    public void fillDetails(String userRole, String employeeNameHint, String employee_Name, String status, String _username, String pass_word, String confirmPass){
         addbtn.click();
-        userRoleDropDown.click();
-        page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(userRole)).click();
+        if (userRole != null && !userRole.isEmpty()) {
+            userRoleDropDown.click();
+            page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(userRole)).click();
+        }
         employeeName.click();
-        employeeName.fill(employeeNameHint);
-        page.getByText(employee_Name).click();
-        statusDropDown.click();
-        page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(status)).click();
+        if(employeeNameHint!=null && !employeeNameHint.isEmpty()) {
+            employeeName.fill(employeeNameHint);
+            page.getByText(employee_Name).click();
+        }
+        if (status != null && !status.isEmpty()) {
+            statusDropDown.click();
+            page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName(status)).click();
+        }
         userName.fill(_username);
         password.fill(pass_word);
-        confirmPassword.fill(pass_word);
+        confirmPassword.fill(confirmPass);
         savebtn.click();
         //page.pause();
     }

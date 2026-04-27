@@ -28,6 +28,16 @@ public class PIMTest extends BaseTest {
         pimPage.clickAddButton();
     }
 
+    public String generateLongName(int minLength) {
+        String name = faker.name().firstName();
+
+        while (name.length() <= minLength) {
+            name += faker.name().firstName();
+        }
+
+        return name;
+    }
+
     @Test
     public void saveEmployeeDetails_success(){
         loginAndOpenAddPage();
@@ -67,6 +77,34 @@ public class PIMTest extends BaseTest {
     }
 
     @Test
+    public void saveEmployeeDetails_longCharacterNames(){
+        loginAndOpenAddPage();
+
+        String firstName=generateLongName(32);
+        String middleName=faker.name().lastName();
+        String lastName=faker.name().lastName();
+        String id=faker.number().digits(5);
+
+        pimPage.saveEmployeeDetails(firstName,middleName,lastName,id);
+
+        assertThat(pimPage.getLengthError("Should not exceed 30 characters")).isVisible();
+    }
+
+    @Test
+    public void saveEmployeeDetails_longId(){
+        loginAndOpenAddPage();
+
+        String firstName=faker.name().firstName();
+        String middleName=faker.name().firstName();
+        String lastName=faker.name().lastName();
+        String id=faker.number().digits(12);
+
+        pimPage.saveEmployeeDetails(firstName,middleName,lastName,id);
+
+        assertThat(pimPage.getLengthError("Should not exceed 10 characters")).isVisible();
+    }
+
+    @Test
     public void saveEmployeeDetails_duplicateId(){
         loginAndOpenAddPage();
 
@@ -80,7 +118,6 @@ public class PIMTest extends BaseTest {
 
         //Resave using the same credentials
         pimPage.saveEmployeeDetails(firstName,middleName,lastName,id);
-
     }
 
 }
