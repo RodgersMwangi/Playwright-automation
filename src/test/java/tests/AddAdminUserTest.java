@@ -73,6 +73,7 @@ public class AddAdminUserTest extends BaseTest {
     public void employeeCreation(){
         DashboardPage dashboardPage=new DashboardPage(page);
         PIMPage pimPage=dashboardPage.navigateToPIM();
+        pimPage.clickAddButton();
         pimPage.saveEmployeeDetails(employeeFirstName, "", employeeLastName, employeeCreationID);
 
         assertThat(page.getByText(employeeFirstName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(15000));;
