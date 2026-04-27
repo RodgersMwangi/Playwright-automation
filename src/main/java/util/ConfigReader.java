@@ -36,5 +36,6 @@ public class ConfigReader {
         ConfigReader configReader=ConfigReader.getInstance();
         String baseurl=configReader.getProperty("orangeHrm.url");
         System.out.println(baseurl);
+
     }
 }
