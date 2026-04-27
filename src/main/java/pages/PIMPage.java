@@ -4,6 +4,7 @@ import base.BasePage;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import net.datafaker.Faker;
 
 public class PIMPage extends BasePage {
     private final Locator PIMHeader;
@@ -13,19 +14,21 @@ public class PIMPage extends BasePage {
     private final Locator strEmployeeId;
     private final Locator btnSave;
     private final Locator employeeListLink;
+    private final Locator errorMessage;
     private final Locator btnAddEmployee;
+
+    Faker faker=new Faker();
 
     public PIMPage(Page page) {
         super(page);
         this.PIMHeader=page.getByRole(AriaRole.HEADING,new Page.GetByRoleOptions().setName("PIM"));
-
-        //this.PIMHeader= page.locator(".oxd-topbar-header-title");
         this.txtFirstName =page.locator("input[name='firstName']");
         this.txtMiddleName = page.getByPlaceholder("Middle Name");
         this.txtLastName = page.getByPlaceholder("Last Name");
         this.strEmployeeId = page.locator("//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']");
         this.btnSave = page.locator("button[type='submit']");
         this.employeeListLink=page.getByRole(AriaRole.LINK,new Page.GetByRoleOptions().setName("Employee List"));
+        this.errorMessage=page.getByText("Required", new Page.GetByTextOptions().setExact(true));
         this.btnAddEmployee=page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add"));
     }
 
@@ -58,6 +61,13 @@ public class PIMPage extends BasePage {
         btnSave.click();
     }
 
+    public Locator getRequiredError() {
+        return page.getByText(
+                "Required",
+                new Page.GetByTextOptions().setExact(true)
+        );
+    }
+
     public void saveEmployeeDetails(String firstName, String middleName, String lastName,String id){
         clickAddButton();
         enterFirstName(firstName);
@@ -66,5 +76,23 @@ public class PIMPage extends BasePage {
         enterEmployeeID(id);
         clickSaveButton();
        // page.pause();
+    }
+
+
+
+
+    public void saveEmployeeDetails(String firstName, String middleName, String id){
+        clickAddButton();
+        enterFirstName(firstName);
+        enterMiddleName(middleName);
+        enterEmployeeID(id);
+        clickSaveButton();
+    }
+
+    public void saveEmployeeDetails(String middleName, String id){
+        clickAddButton();
+        enterMiddleName(middleName);
+        enterEmployeeID(id);
+        clickSaveButton();
     }
 }
