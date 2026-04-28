@@ -4,6 +4,7 @@ import base.BasePage;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import net.datafaker.Faker;
 
 public class PIMPage extends BasePage {
     private final Locator PIMHeader;
@@ -15,11 +16,10 @@ public class PIMPage extends BasePage {
     private final Locator employeeListLink;
     private final Locator btnAddEmployee;
 
+
     public PIMPage(Page page) {
         super(page);
         this.PIMHeader=page.getByRole(AriaRole.HEADING,new Page.GetByRoleOptions().setName("PIM"));
-
-        //this.PIMHeader= page.locator(".oxd-topbar-header-title");
         this.txtFirstName =page.locator("input[name='firstName']");
         this.txtMiddleName = page.getByPlaceholder("Middle Name");
         this.txtLastName = page.getByPlaceholder("Last Name");
@@ -58,13 +58,37 @@ public class PIMPage extends BasePage {
         btnSave.click();
     }
 
+    public Locator getRequiredError() {
+        return page.getByText(
+                "Required",
+                new Page.GetByTextOptions().setExact(true)
+        );
+    }
+
+    public Locator getLengthError(String message) {
+        return page.locator("span")
+                .filter(new Locator.FilterOptions().setHasText(message))
+                .first();
+    }
+
     public void saveEmployeeDetails(String firstName, String middleName, String lastName,String id){
-        clickAddButton();
         enterFirstName(firstName);
         enterMiddleName(middleName);
         enterLastName(lastName);
         enterEmployeeID(id);
         clickSaveButton();
-       // page.pause();
+    }
+
+    public void saveEmployeeDetails(String firstName, String middleName, String id){
+        enterFirstName(firstName);
+        enterMiddleName(middleName);
+        enterEmployeeID(id);
+        clickSaveButton();
+    }
+
+    public void saveEmployeeDetails(String middleName, String id){
+        enterMiddleName(middleName);
+        enterEmployeeID(id);
+        clickSaveButton();
     }
 }

@@ -18,6 +18,8 @@ public class MyInfoPage extends BasePage {
     private final Locator requiredValidationMessage;
     private final Locator employeeIdInput;
     private final Locator otherIdInput;
+    private final Locator driverLicenseInput;
+    private final Locator licenseExpiryDateInput;
 
     public MyInfoPage(Page page) {
         super(page);
@@ -33,6 +35,8 @@ public class MyInfoPage extends BasePage {
         this.requiredValidationMessage = page.locator(".oxd-input-field-error-message:has-text('Required')");
         this.employeeIdInput = page.getByRole(AriaRole.TEXTBOX).nth(4);
         this.otherIdInput = page.getByRole(AriaRole.TEXTBOX).nth(5);
+        this.driverLicenseInput = page.locator("div:nth-child(2) > div > .oxd-input-group > div:nth-child(2) > .oxd-input");
+        this.licenseExpiryDateInput = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("yyyy-dd-mm")).first();
     }
 
     public void clickMyInfoMenu() {
@@ -136,4 +140,29 @@ public class MyInfoPage extends BasePage {
     public String getOtherIdValue() {
         return otherIdInput.inputValue();
     }
+
+
+    public void updateDriverLicenseFields(String licenseNumber, String expiryDate) {
+        driverLicenseInput.waitFor(
+                new Locator.WaitForOptions()
+                        .setState(WaitForSelectorState.VISIBLE)
+                        .setTimeout(10000)
+        );
+        driverLicenseInput.click();
+        driverLicenseInput.press("Control+A");
+        driverLicenseInput.fill(licenseNumber);
+
+        licenseExpiryDateInput.click();
+        licenseExpiryDateInput.press("Control+A");
+        licenseExpiryDateInput.fill(expiryDate);
+    }
+
+    public String getDriverLicenseValue() {
+        return driverLicenseInput.inputValue();
+    }
+
+    public String getLicenseExpiryDateValue() {
+        return licenseExpiryDateInput.inputValue();
+    }
 }
+
