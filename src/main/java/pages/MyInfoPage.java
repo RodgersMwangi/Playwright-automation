@@ -136,31 +136,4 @@ public class MyInfoPage extends BasePage {
     public String getOtherIdValue() {
         return otherIdInput.inputValue();
     }
-
-    public void openUserDropdown() {
-        page.locator(".oxd-userdropdown-name").click();
-    }
-
-    public void clickChangePassword() {
-        page.locator("a:has-text('Change Password')").click();
-    }
-
-    public void changePassword(String currentPwd, String newPwd) {
-        // Wait for form
-        page.locator("input[type='password']").first().waitFor();
-
-        // Fill fields (order matters)
-        page.locator("input[type='password']").nth(0).fill(currentPwd);
-        page.locator("input[type='password']").nth(1).fill(newPwd);
-        page.locator("input[type='password']").nth(2).fill(newPwd);
-
-        // Click Save
-        page.locator("button:has-text('Save')").click();
-    }
-
-    public boolean issuccessMessageVisible() {
-        var success = page.locator("p:has-text('Successfully')");
-        success.waitFor();
-        return success.isVisible();
-    }
 }
