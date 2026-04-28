@@ -16,4 +16,11 @@ public class EditPIMTest extends BaseTest {
         EditPIMPage editPIMPage = new EditPIMPage(page);
         editPIMPage.editContactDetails();
     }
+
+    @Test
+    public void testWithInvalidCredentials(){
+        LoginPage loginPage=new LoginPage(page);
+        loginPage.userLogin("Admin", "admin");
+        assertThat(page.getByText("Invalid credentials")).isVisible();
+    }
 }
