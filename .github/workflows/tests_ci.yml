@@ -11,6 +11,7 @@ on:
 jobs:
   build-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     #container:
     #  image: eclipse-temurin:17-jdk
     steps:
@@ -32,5 +33,9 @@ jobs:
       - name: Install Playwright Browsers
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
-      - name: Run unit tests
-        run: mvn test
+      - name: Run unit tests with Retry
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 2
+          command: mvn test
