@@ -12,18 +12,20 @@ public class BrowserFactory {
 
     public Browser createBrowser(){
         playwright=Playwright.create();
-        String browserOption = System.getProperty("browser", "chromium");;
+        String browserOption = System.getProperty("browser", "chromium");
+
+        boolean isCI = System.getenv("CI") != null;
 
         if(browserOption.equalsIgnoreCase("webkit")) {
             System.out.println("Using webkit...");
-            return browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            return browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(isCI));
         }
         else if(browserOption.equalsIgnoreCase("firefox")) {
             System.out.println("Using firefox...");
-            return browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            return browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(isCI));
         }
         System.out.println("Using chromium...");
-        return browser=playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+        return browser=playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(isCI));
     }
 
     public void closeBrowser(){
