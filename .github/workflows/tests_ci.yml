@@ -11,6 +11,7 @@ on:
 jobs:
   build-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     #container:
     #  image: eclipse-temurin:17-jdk
     steps:
