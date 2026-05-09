@@ -24,8 +24,13 @@ jobs:
           distribution: 'temurin'
           cache: maven  # cache all dependencies so we don't need to download them again for the next run
 
-      - name: Build with maven
-        run: mvn -B package --file pom.xml
+      # 1. Compile the project to download Playwright and generate the driver CLI
+      - name: Compile project
+        run: mvn test-compile
+
+        # 2. Install the Playwright browsers on the Ubuntu runner
+      - name: Install Playwright Browsers
+        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
       - name: Run unit tests
         run: mvn test
