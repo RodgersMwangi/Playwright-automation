@@ -8,7 +8,7 @@ import util.ConfigReader;
 
 public class BaseTest {
     protected Browser browser;
-    protected Page page;
+    public static Page page;
 
     BrowserFactory browserFactory;
     ConfigReader configReader=ConfigReader.getInstance();

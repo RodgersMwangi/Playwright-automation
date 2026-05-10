@@ -1,5 +1,6 @@
 import base.BaseTest;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.MyInfoPage;
@@ -7,6 +8,7 @@ import util.ConfigReader;
 import util.DataFaker;
 import java.util.concurrent.ThreadLocalRandom;
 
+@Listeners(listeners.TestListener.class)
 public class MyInfoTest extends BaseTest {
 
     ConfigReader configReader = ConfigReader.getInstance();
