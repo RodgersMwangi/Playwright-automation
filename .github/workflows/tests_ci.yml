@@ -39,3 +39,10 @@ jobs:
           timeout_minutes: 10  #input parameter for nick-fields/retry, how long to wait before retrying
           max_attempts: 2
           command: mvn test
+
+      - name: Upload report
+        if: always()  # This ensures the report uploads even if tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test-output/ExtentReport.html
