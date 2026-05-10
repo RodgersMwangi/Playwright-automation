@@ -16,21 +16,23 @@ import pages.UserManagementPage;
 import util.ConfigReader;
 import util.DataFaker;
 
+import javax.xml.crypto.Data;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class AddAdminUserTest extends BaseTest {
     ConfigReader configReader =ConfigReader.getInstance();
     private Locator btnAdminModule;
     String userRole=configReader.getProperty("userRole.dropdown");
-    String employeeFirstName=DataFaker.FAKER.name().firstName();
-    String employeeLastName=DataFaker.FAKER.name().lastName();
+    String employeeFirstName=DataFaker.firstName;
+    String employeeLastName=DataFaker.lastName;
     String employeeNameHint=employeeFirstName;
-    String employee_name = employeeFirstName + " " + employeeLastName;
-    String employeeCreationID = DataFaker.FAKER.number().digits(6);
+    String employee_name = DataFaker.name;
+    String employeeCreationID = DataFaker.id;
     String statusDropdown=configReader.getProperty("adduser.status.dropdown");
-    String userName= DataFaker.FAKER.regexify("[a-zA-Z]{5,10}");
+    String userName= DataFaker.userName;
     String existingUserName=configReader.getProperty("existingEmployee");
-    String userPassword=DataFaker.FAKER.regexify("[A-Z]{1}[a-z]{5}[0-9]{2}[@#$%]{1}");;
+    String userPassword=DataFaker.userPassword;
     LoginPage loginPage;
     UserManagementPage userManagementPage;
     private static boolean isEmployeeCreated = false;
@@ -73,6 +75,7 @@ public class AddAdminUserTest extends BaseTest {
     public void employeeCreation(){
         DashboardPage dashboardPage=new DashboardPage(page);
         PIMPage pimPage=dashboardPage.navigateToPIM();
+        pimPage.clickAddButton();
         pimPage.saveEmployeeDetails(employeeFirstName, "", employeeLastName, employeeCreationID);
 
         assertThat(page.getByText(employeeFirstName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(15000));;
