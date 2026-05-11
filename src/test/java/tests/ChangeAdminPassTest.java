@@ -68,7 +68,7 @@ public class ChangeAdminPassTest extends BaseTest {
 
         changeAdminPasswordPage.changePasswordMismatch(
                 configReader.getProperty("admin.password"),
-                configReader.getProperty("mismatch.password"),
+                configReader.getProperty("mismatch.new.password"),
                 configReader.getProperty("mismatch.confirm.password")
         );
 
