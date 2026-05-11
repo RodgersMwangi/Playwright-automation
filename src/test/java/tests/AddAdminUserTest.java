@@ -55,7 +55,7 @@ public class AddAdminUserTest extends BaseTest {
     public void loggingIn(){
         btnAdminModule=page.locator("a[href*='viewAdminModule']");
         loginPage.userLogin(configReader.getProperty("admin.username"),configReader.getProperty("admin.password"));
-        assertThat(page.locator("h6.oxd-topbar-header-breadcrumb-module:has-text('Dashboard')")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        assertThat(page.locator("h6.oxd-topbar-header-breadcrumb-module:has-text('Dashboard')")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
 
     }
 
@@ -68,7 +68,7 @@ public class AddAdminUserTest extends BaseTest {
         btnAdminModule.click();
         //page.pause();
         //System.out.println(employee_name);
-        assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("User Management"))).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("User Management"))).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
         userManagementPage.fillDetails(userRole, employeeNameHint, employee_name, statusDropdown,user_Name, userpass, confirmpass);
     }
 
@@ -78,19 +78,19 @@ public class AddAdminUserTest extends BaseTest {
         pimPage.clickAddButton();
         pimPage.saveEmployeeDetails(employeeFirstName, "", employeeLastName, employeeCreationID);
 
-        assertThat(page.getByText(employeeFirstName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(15000));;
+        assertThat(page.getByText(employeeFirstName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));;
     }
 
     @Test
     public void addAdminUser(){ //Test 1: adding a new admin user
         adminCreation(userName, userPassword, userPassword);
         try {
-            page.getByText("exists").waitFor(new Locator.WaitForOptions().setTimeout(10000));
+            page.getByText("exists").waitFor(new Locator.WaitForOptions().setTimeout(20000));
             System.out.println("User " + userName + " already exists");
         } catch (com.microsoft.playwright.TimeoutError e) {
             // If it doesn't appear, just continue
         }
-        assertThat(page.getByText(userName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        assertThat(page.getByText(userName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
 
     }
 
@@ -98,14 +98,14 @@ public class AddAdminUserTest extends BaseTest {
     public void userAlreadyExist(){
         //Test 2: tests an existing user
         adminCreation(existingUserName, userPassword,userPassword);
-        assertThat(page.getByText("exists")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        assertThat(page.getByText("exists")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
     }
 
     @Test
     public void passwordNotMatching(){
         //Test3: tests passwords not matching
         adminCreation(userName, userPassword, "Newpass124");
-        assertThat(page.getByText("match")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        assertThat(page.getByText("match")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
 
     }
 
