@@ -104,7 +104,7 @@ public class AddAdminUserTest extends BaseTest {
     public void passwordNotMatching(){
         //Test3: tests passwords not matching
         adminCreation(userName, userPassword, "Newpass124");
-        assertThat(page.getByText("matchh")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
+        assertThat(page.getByText("match")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
 
     }
 
