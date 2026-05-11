@@ -5,10 +5,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.DashboardPage;
 import pages.LoginPage;
 import pages.PIMPage;
@@ -20,6 +17,8 @@ import javax.xml.crypto.Data;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+
+@Listeners(listeners.TestListener.class)
 public class AddAdminUserTest extends BaseTest {
     ConfigReader configReader =ConfigReader.getInstance();
     private Locator btnAdminModule;

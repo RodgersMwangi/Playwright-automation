@@ -3,11 +3,14 @@ package tests;
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.ChangeAdminPasswordPage;
 import pages.LoginPage;
 import util.ConfigReader;
 
+
+@Listeners(listeners.TestListener.class)
 public class ChangeAdminPassTest extends BaseTest {
 
     ConfigReader configReader = ConfigReader.getInstance();
