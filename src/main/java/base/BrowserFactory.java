@@ -25,7 +25,12 @@ public class BrowserFactory {
             return browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(isCI));
         }
         System.out.println("Using chromium...");
-        return browser=playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(isCI));
+        //return browser=playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(isCI));
+        return browser = playwright.chromium().launch(
+                new BrowserType.LaunchOptions()
+                        .setHeadless(false)
+                        .setArgs(java.util.List.of("--ignore-certificate-errors"))
+        );
     }
 
     public void closeBrowser(){
