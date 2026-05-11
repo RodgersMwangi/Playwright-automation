@@ -6,6 +6,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import util.ConfigReader;
 
+
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,55 +24,52 @@ public class BaseTest {
         browserFactory=new BrowserFactory();
         browser=browserFactory.createBrowser();
         page=browser.newPage();
-    public void setUp() {
 
-        browserFactory = new BrowserFactory();
-        browser = browserFactory.createBrowser();
+            // Create context with video recording
+            context = browser.newContext(
+                    new Browser.NewContextOptions()
+                            .setRecordVideoDir(Paths.get("target/videos/"))
+                            .setRecordVideoSize(1280, 720)
+            );
 
-        // Create context with video recording
-        context = browser.newContext(
-                new Browser.NewContextOptions()
-                        .setRecordVideoDir(Paths.get("target/videos/"))
-                        .setRecordVideoSize(1280, 720)
-        );
+            page = context.newPage();
 
-        page = context.newPage();
+            page.setDefaultTimeout(60000);
+            page.setDefaultNavigationTimeout(60000);
 
-        page.setDefaultTimeout(600000);
-        page.setDefaultNavigationTimeout(600000);
-
-        page.navigate(configReader.getProperty("orangeHrm.url"));
-    }
-
-    @AfterMethod
-    public void tearDown(ITestResult result) {
-
-        if (context != null) {
-            context.close(); // MUST close first for video to be saved
+            page.navigate(configReader.getProperty("orangeHrm.url"));
         }
 
-        // Handle video after context is closed
-        if (page != null && page.video() != null) {
+        @AfterMethod
+        public void tearDown(ITestResult result) {
 
-            Path videoPath = page.video().path();
-
-            if (result.getStatus() == ITestResult.FAILURE) {
-
-                Path targetPath = Paths.get(
-                        "target/videos/failed/" +
-                                result.getName() + ".webm"
-                );
-
-                targetPath.toFile().getParentFile().mkdirs();
-
-                videoPath.toFile().renameTo(targetPath.toFile());
-
-            } else {
-                // delete video if test passed
-                videoPath.toFile().delete();
+            if (context != null) {
+                context.close(); // MUST close first for video to be saved
             }
-        }
 
-        browserFactory.closeBrowser();
+            // Handle video after context is closed
+            if (page != null && page.video() != null) {
+
+                Path videoPath = page.video().path();
+
+                if (result.getStatus() == ITestResult.FAILURE) {
+
+                    Path targetPath = Paths.get(
+                            "target/videos/failed/" +
+                                    result.getName() + ".webm"
+                    );
+
+                    targetPath.toFile().getParentFile().mkdirs();
+
+                    videoPath.toFile().renameTo(targetPath.toFile());
+
+                } else {
+                    // delete video if test passed
+                    videoPath.toFile().delete();
+                }
+            }
+
+            browserFactory.closeBrowser();
+        }
     }
-}
+
