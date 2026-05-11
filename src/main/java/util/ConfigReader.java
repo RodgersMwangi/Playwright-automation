@@ -6,36 +6,54 @@ import java.util.Properties;
 
 public class ConfigReader {
     private static ConfigReader instance;
-    private static final Properties properties=new Properties();
-    //private static final String testdataFilePath="src/test/resources/TestData.properties";
+    private static final Properties properties = new Properties();
 
-    private ConfigReader(){
-        try(FileInputStream fileInputStream=new FileInputStream("src/test/resources/TestData.properties")){
+    private ConfigReader() {
+        // Step 1: Load TestData.properties first (non-sensitive data)
+        try (FileInputStream fileInputStream = new FileInputStream(
+                "src/test/resources/TestData.properties")) {
             properties.load(fileInputStream);
-        }catch(IOException e){
-            System.out.println("Failed to load properties file");
+            System.out.println("✅ TestData.properties loaded successfully");
+        } catch (IOException e) {
+            System.out.println("❌ Failed to load TestData.properties: " + e.getMessage());
+        }
+
+        // Step 2: Load secret.properties on top (credentials)
+        // This overrides any duplicate keys from TestData.properties
+        try (FileInputStream secretInputStream = new FileInputStream(
+                "src/test/resources/secret.properties")) {
+            properties.load(secretInputStream);
+            System.out.println("✅ secret.properties loaded successfully");
+        } catch (IOException e) {
+            // Warn but don't crash — teammate may not have set it up yet
+            System.out.println("⚠️ secret.properties not found! " +
+                    "Please copy secret.properties.template, " +
+                    "rename it to secret.properties and fill in your credentials");
         }
     }
 
-    public static ConfigReader getInstance(){
-        if(instance==null){
-            synchronized (ConfigReader.class){
-                if(instance==null){
-                    instance=new ConfigReader();
+    public static ConfigReader getInstance() {
+        if (instance == null) {
+            synchronized (ConfigReader.class) {
+                if (instance == null) {
+                    instance = new ConfigReader();
                 }
             }
         }
         return instance;
     }
 
-    public String getProperty(String key){
-        return properties.getProperty(key);
+    public String getProperty(String key) {
+        String value = properties.getProperty(key);
+        if (value == null) {
+            System.out.println("⚠️ Property not found for key: " + key);
+        }
+        return value;
     }
 
     public static void main(String[] args) {
-        ConfigReader configReader=ConfigReader.getInstance();
-        String baseurl=configReader.getProperty("orangeHrm.url");
-        System.out.println(baseurl);
-
+        ConfigReader configReader = ConfigReader.getInstance();
+        String baseUrl = configReader.getProperty("orangeHrm.url");
+        System.out.println("URL: " + baseUrl);
     }
 }

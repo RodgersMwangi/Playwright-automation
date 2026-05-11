@@ -6,3 +6,4 @@ EOF
 allure-results/
 target
 .allure/
+src/test/resources/secret.properties
