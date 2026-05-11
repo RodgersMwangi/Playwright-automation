@@ -2,12 +2,14 @@ package tests;
 
 import base.BaseTest;
 import com.microsoft.playwright.assertions.LocatorAssertions;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import util.ConfigReader;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+@Listeners(listeners.TestListener.class)
 public class LoginTest extends BaseTest {
     ConfigReader configReader=ConfigReader.getInstance();
 

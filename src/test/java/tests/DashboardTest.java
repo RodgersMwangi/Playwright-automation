@@ -2,12 +2,14 @@ package tests;
 
 import base.BaseTest;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.DashboardPage;
 import pages.LoginPage;
 import pages.PIMPage;
 import util.ConfigReader;
 
+@Listeners(listeners.TestListener.class)
 public class DashboardTest extends BaseTest {
     ConfigReader configReader=ConfigReader.getInstance();
 
