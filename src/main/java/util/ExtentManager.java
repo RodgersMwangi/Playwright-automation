@@ -9,9 +9,12 @@ public class ExtentManager {
 
     public static ExtentReports getInstance(){
         if (extentReports==null){
-            ExtentSparkReporter sparkReporter=new ExtentSparkReporter("test-output/ExtentReport.html");
+            //Prevents overwriting the reports file on each run,each run now generates its own report
+            String path = "test-output/ExtentReport_" + System.currentTimeMillis() + ".html";
+            ExtentSparkReporter sparkReporter = new ExtentSparkReporter(path);
+            //ExtentSparkReporter sparkReporter=new ExtentSparkReporter("test-output/ExtentReport.html");
 
-            sparkReporter.config().setReportName("Automation test results");
+            sparkReporter.config().setReportName("Regression test results");
             sparkReporter.config().setDocumentTitle("Test execution report");
 
             extentReports=new ExtentReports();

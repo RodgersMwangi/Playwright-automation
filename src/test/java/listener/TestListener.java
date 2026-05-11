@@ -6,30 +6,37 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import util.ExtentManager;
+import util.TestManager;
 
 public class TestListener implements ITestListener {
     private static ExtentReports extent =ExtentManager.getInstance();
-    private static ThreadLocal<ExtentTest> test=new ThreadLocal<>();
+    //private static ThreadLocal<ExtentTest> test=new ThreadLocal<>();
 
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentTest extentTest=extent.createTest(result.getTestClass().getName()+" - "+result.getMethod().getMethodName());
-        test.set(extentTest);
+        String testName=result.getMethod().getMethodName();
+        String className=result.getTestClass().getRealClass().getSimpleName();
+        ExtentTest extentTest= extent.createTest(className+" - "+testName);
+        //test.set(extentTest);
+        TestManager.setTest(extentTest);
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        test.get().pass("Test passed");
+        TestManager.getTest().pass("Test passed successfully");
+        //test.get().pass("Test passed successfully");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        test.get().fail(result.getThrowable());
+        TestManager.getTest().fail(result.getThrowable());
+        //test.get().fail(result.getThrowable());
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        test.get().skip("Test skipped");
+        TestManager.getTest().skip("Test skipped");
+        //test.get().skip("Test skipped");
     }
 
     @Override

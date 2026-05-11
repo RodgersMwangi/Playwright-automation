@@ -6,6 +6,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import util.ConfigReader;
 
+import java.lang.reflect.Method;
+
 public class BaseTest {
     protected Browser browser;
     protected Page page;
@@ -14,9 +16,7 @@ public class BaseTest {
     ConfigReader configReader=ConfigReader.getInstance();
 
     @BeforeMethod
-    public void setUp(){
-
-
+    public void setUp(Method method){
         browserFactory=new BrowserFactory();
         browser=browserFactory.createBrowser();
         page=browser.newPage();
