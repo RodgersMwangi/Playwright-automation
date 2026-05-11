@@ -1,3 +1,5 @@
+package tests;
+
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -5,7 +7,7 @@ import pages.LoginPage;
 import pages.MyInfoPage;
 import util.ConfigReader;
 import util.DataFaker;
-import java.util.concurrent.ThreadLocalRandom;
+
 
 public class MyInfoTest extends BaseTest {
 
@@ -50,10 +52,9 @@ public class MyInfoTest extends BaseTest {
         MyInfoPage myInfoPage = new MyInfoPage(page);
 
         // Faker for realistic names
-        String firstName = DataFaker.FAKER.name().firstName();
-        String middleName = DataFaker.FAKER.name().firstName();
-        String lastName = DataFaker.FAKER.name().lastName();
-
+        String firstName = DataFaker.firstName;
+        String middleName = DataFaker.middleName;
+        String lastName = DataFaker.lastName;
         loginPage.userLogin(
                 configReader.getProperty("admin.username"),
                 configReader.getProperty("admin.password")
@@ -150,9 +151,8 @@ public class MyInfoTest extends BaseTest {
         MyInfoPage myInfoPage = new MyInfoPage(page);
 
         // ThreadLocalRandom for IDs
-        int randomNumber = ThreadLocalRandom.current().nextInt(1000, 9999);
-        String employeeId = "EMP" + randomNumber;
-        String otherId = "OTH" + randomNumber;
+        String employeeId = DataFaker.employeeId;
+        String otherId = DataFaker.otherId;
 
         loginPage.userLogin(
                 configReader.getProperty("admin.username"),
@@ -205,10 +205,9 @@ public class MyInfoTest extends BaseTest {
         MyInfoPage myInfoPage = new MyInfoPage(page);
 
 
-        String licenseNumber = "DL" + DataFaker.FAKER.regexify("[0-9]{7}");
+        String licenseNumber = DataFaker.licenseNumber;
+        String expiryDate = DataFaker.licenseExpiryDate;
 
-
-        String expiryDate = DataFaker.FAKER.regexify("202[7-9]-(0[1-9]|[12][0-9]|30)-(0[1-9]|1[0-2])");
 
         loginPage.userLogin(
                 configReader.getProperty("admin.username"),
