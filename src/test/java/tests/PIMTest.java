@@ -5,6 +5,7 @@ import com.microsoft.playwright.assertions.LocatorAssertions;
 import net.datafaker.Faker;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.DashboardPage;
 import pages.LoginPage;
@@ -13,6 +14,7 @@ import util.ConfigReader;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+@Listeners(listeners.TestListener.class)
 public class PIMTest extends BaseTest {
     ConfigReader configReader=ConfigReader.getInstance();
     PIMPage pimPage;
