@@ -11,7 +11,7 @@ on:
 jobs:
   build-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 15 #github actions property, hard limit where github kills the runner
     #container:
     #  image: eclipse-temurin:17-jdk
     steps:
@@ -36,6 +36,20 @@ jobs:
       - name: Run unit tests with Retry
         uses: nick-fields/retry@v3
         with:
-          timeout_minutes: 10
+          timeout_minutes: 10  #input parameter for nick-fields/retry, how long to wait before retrying
           max_attempts: 2
           command: mvn test
+
+      - name: Upload report
+        if: always()  # This ensures the report uploads even if tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test-output/ExtentReport.html
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failed screenshots
+          path: target/screenshots/failed
