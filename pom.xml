@@ -14,7 +14,7 @@
 
     <dependencies>
 
-        <!-- Playwright — compile scope: used in src/main/java (BrowserFactory, BasePage, page objects) -->
+        <!-- Playwright -->
         <dependency>
             <groupId>com.microsoft.playwright</groupId>
             <artifactId>playwright</artifactId>
@@ -22,7 +22,7 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- TestNG — test scope: only used in src/test/java -->
+        <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -30,7 +30,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- DataFaker — test scope: only used for test data generation -->
+        <!-- DataFaker -->
         <dependency>
             <groupId>net.datafaker</groupId>
             <artifactId>datafaker</artifactId>
@@ -38,33 +38,30 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Jackson — compile scope: used in ConfigReader in src/main/java -->
+        <!-- Jackson — JSON parsing for ConfigReader -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.17.1</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- ExtentReports — test reporting -->
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
             <version>5.1.2</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Surefire plugin — controls how Maven runs your TestNG tests -->
-            <!-- Correct place: <build><plugins>, NOT inside <dependencies> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.4</version>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M7</version>
-
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>

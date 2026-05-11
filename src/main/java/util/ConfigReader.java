@@ -19,7 +19,7 @@ public class ConfigReader {
 
     private static final Set<String> ENCODED_KEYS = Set.of(
             "admin.password",
-           " admin.newPassword",
+            "admin.newPassword",
             "invalid.current.password",
             "mismatch.new.password",
             "mismatch.confirm.password",
