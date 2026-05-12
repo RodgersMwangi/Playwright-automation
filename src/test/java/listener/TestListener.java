@@ -13,7 +13,10 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentTest extentTest=extent.createTest(result.getTestClass().getName()+" - "+result.getMethod().getMethodName());
+        String classname=result.getTestClass().getName();
+        String testname=result.getMethod().getMethodName();
+        String description=result.getMethod().getDescription();
+        ExtentTest extentTest= extent.createTest(classname+" - "+testname,description);
         test.set(extentTest);
     }
 
