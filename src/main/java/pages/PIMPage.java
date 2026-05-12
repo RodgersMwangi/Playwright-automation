@@ -4,7 +4,7 @@ import base.BasePage;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import net.datafaker.Faker;
+import util.TestManager;
 
 public class PIMPage extends BasePage {
     private final Locator PIMHeader;
@@ -72,14 +72,17 @@ public class PIMPage extends BasePage {
     }
 
     public void saveEmployeeDetails(String firstName, String middleName, String lastName,String id){
+        TestManager.getTest().info("Starting employee creation test");
         enterFirstName(firstName);
         enterMiddleName(middleName);
         enterLastName(lastName);
         enterEmployeeID(id);
         clickSaveButton();
+        TestManager.getTest().info("Saved employee; "+firstName +" "+lastName+" of ID "+id);
     }
 
     public void saveEmployeeDetails(String firstName, String middleName, String id){
+        TestManager.getTest().info("Starting employee creation test");
         enterFirstName(firstName);
         enterMiddleName(middleName);
         enterEmployeeID(id);
@@ -87,6 +90,7 @@ public class PIMPage extends BasePage {
     }
 
     public void saveEmployeeDetails(String middleName, String id){
+        TestManager.getTest().info("Starting employee creation test");
         enterMiddleName(middleName);
         enterEmployeeID(id);
         clickSaveButton();

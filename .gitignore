@@ -2,4 +2,5 @@ cat > .gitignore <<'EOF'
 target/
 .idea/
 *.iml
+test-output/
 EOF
