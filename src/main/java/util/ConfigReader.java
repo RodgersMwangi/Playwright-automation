@@ -1,15 +1,8 @@
 package util;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.Properties;
 
 public class ConfigReader {
     private static ConfigReader instance;
@@ -26,23 +19,15 @@ public class ConfigReader {
         }
 
         // Step 2: Load secret.properties on top (credentials)
-        // This overrides any duplicate keys from TestData.properties
         try (FileInputStream secretInputStream = new FileInputStream(
                 "src/test/resources/secret.properties")) {
             properties.load(secretInputStream);
             System.out.println("✅ secret.properties loaded successfully");
         } catch (IOException e) {
-            // Warn but don't crash — teammate may not have set it up yet
             System.out.println("⚠️ secret.properties not found! " +
                     "Please copy secret.properties.template, " +
                     "rename it to secret.properties and fill in your credentials");
         }
-
-    } catch (IOException e) {
-        throw new RuntimeException(
-                "Failed to load testdata.json. " +
-                        "Ensure the file exists at src/test/resources/testdata.json", e);
-       }
     }
 
     public static ConfigReader getInstance() {
