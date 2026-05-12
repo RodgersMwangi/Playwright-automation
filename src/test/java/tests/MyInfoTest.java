@@ -17,7 +17,7 @@ public class MyInfoTest extends BaseTest {
 
 
     // TC-001: Verify Admin user can navigate to My info Page
-    @Test(description = "TC-001: Verify My Info page is displayed")
+    @Test(description = "TC-001: Verify My Info page is displayed", priority = 1)
     public void myInfoPageDisplayVerification() {
         LoginPage loginPage = new LoginPage(page);
         MyInfoPage myInfoPage = new MyInfoPage(page);
@@ -48,7 +48,7 @@ public class MyInfoTest extends BaseTest {
     }
 
     // TC-002: Verify Admin user can update employee full name - using Faker for realistic names
-    @Test(description = "TC-002: Verify Admin can update employee full name")
+    @Test(description = "TC-002: Verify Admin can update employee full name", priority = 2)
     public void updateEmployeeFullNameVerification() {
         LoginPage loginPage = new LoginPage(page);
         MyInfoPage myInfoPage = new MyInfoPage(page);
@@ -108,7 +108,7 @@ public class MyInfoTest extends BaseTest {
     }
 
     // TC-003: Verify required validation appears when required full name fields are empty
-    @Test(description = "TC-003: Verify required validation for empty full name fields")
+    @Test(description = "TC-003: Verify required validation for empty full name fields", priority = 3)
     public void requiredValidationForEmptyFullNameFieldsVerification() {
         LoginPage loginPage = new LoginPage(page);
         MyInfoPage myInfoPage = new MyInfoPage(page);
@@ -147,7 +147,7 @@ public class MyInfoTest extends BaseTest {
     }
 
     // TC-004: Verify Admin user can update Employee Id and Other Id - using ThreadLocalRandom for unique IDs
-    @Test(description = "TC-004: Verify Admin can update Employee Id and Other Id")
+    @Test(description = "TC-004: Verify Admin can update Employee Id and Other Id", priority = 4)
     public void updateEmployeeIdAndOtherIdVerification() {
         LoginPage loginPage = new LoginPage(page);
         MyInfoPage myInfoPage = new MyInfoPage(page);
@@ -201,7 +201,7 @@ public class MyInfoTest extends BaseTest {
     }
 
     // TC-005: Verify Admin user can update Driver's License Number and License Expiry Date
-    @Test(description = "TC-005: Verify Admin can update Driver's License Number and License Expiry Date")
+    @Test(description = "TC-005: Verify Admin can update Driver's License Number and License Expiry Date", priority = 5)
     public void updateDriverLicenseAndExpiryDateVerification() {
         LoginPage loginPage = new LoginPage(page);
         MyInfoPage myInfoPage = new MyInfoPage(page);
