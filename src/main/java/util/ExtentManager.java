@@ -11,7 +11,7 @@ public class ExtentManager {
         if (extentReports==null){
             ExtentSparkReporter sparkReporter=new ExtentSparkReporter("test-output/ExtentReport.html");
 
-            sparkReporter.config().setReportName("Regression test results");
+            sparkReporter.config().setReportName("Automation test results");
             sparkReporter.config().setDocumentTitle("Test execution report");
 
             extentReports=new ExtentReports();

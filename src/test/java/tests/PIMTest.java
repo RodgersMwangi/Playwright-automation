@@ -4,7 +4,6 @@ import base.BaseTest;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import net.datafaker.Faker;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -44,7 +43,6 @@ public class PIMTest extends BaseTest {
     @Test
     public void saveEmployeeDetails_success(){
         loginAndOpenAddPage();
-
         String firstName=faker.name().firstName();
         String middleName=faker.name().firstName();
         String lastName=faker.name().lastName();
