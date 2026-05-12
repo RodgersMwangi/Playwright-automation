@@ -35,7 +35,7 @@ public class MyInfoPage extends BasePage {
         this.requiredValidationMessage = page.locator(".oxd-input-field-error-message:has-text('Required')");
         this.employeeIdInput = page.getByRole(AriaRole.TEXTBOX).nth(4);
         this.otherIdInput = page.getByRole(AriaRole.TEXTBOX).nth(5);
-        this.driverLicenseInput = page.locator("div:nth-child(2) > div > .oxd-input-group > div:nth-child(2) > .oxd-input");
+        this.driverLicenseInput = page.locator("div:nth-child(3) > div:nth-child(2) > div > .oxd-input-group > div:nth-child(2) > .oxd-input");
         this.licenseExpiryDateInput = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("yyyy-dd-mm")).first();
     }
 
