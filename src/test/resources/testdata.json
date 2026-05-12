@@ -1,0 +1,26 @@
+{
+  "orangeHrm.url": "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
+
+  "admin.username": "Admin",
+  "admin.password": "YWRtaW4xMjM=",
+  "admin.newPassword": "YWRtaW4xMjM0",
+
+  "invalid.current.password": "V3JvbmdQYXNzMTIz",
+  "mismatch.new.password": "QWRtaW5AMTIzNA==",
+  "mismatch.confirm.password": "RGlmZmVyZW50QDEyMw==",
+  "weak.password": "MTIz",
+  "empty.value": "",
+
+  "userRole.dropdown": "Admin",
+  "employee.name": "Philips Antunes Silva",
+  "employeeName.hint": "p",
+  "adduser.status.dropdown": "Enabled",
+  "adduser.username": "Piggy",
+  "adduser.password": "UGV0ZXJ4MTIz",
+  "existingEmployee": "Admin",
+
+  "employee.firstname": "Tevin",
+  "employee.middlename": "Steve",
+  "employee.lastname": "Muturi",
+  "employee.id": "EMP003"
+}

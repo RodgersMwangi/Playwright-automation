@@ -1,8 +1,15 @@
 package util;
 
-import java.io.FileInputStream;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 
 public class ConfigReader {
     private static ConfigReader instance;
@@ -30,6 +37,12 @@ public class ConfigReader {
                     "Please copy secret.properties.template, " +
                     "rename it to secret.properties and fill in your credentials");
         }
+
+    } catch (IOException e) {
+        throw new RuntimeException(
+                "Failed to load testdata.json. " +
+                        "Ensure the file exists at src/test/resources/testdata.json", e);
+       }
     }
 
     public static ConfigReader getInstance() {
