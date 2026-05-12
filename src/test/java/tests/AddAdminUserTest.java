@@ -35,6 +35,7 @@ public class AddAdminUserTest extends BaseTest {
     LoginPage loginPage;
     UserManagementPage userManagementPage;
     private static boolean isEmployeeCreated = false;
+    private static int timeoutTime=15000;
 
     @BeforeMethod
     public void setupTestData() {
@@ -54,7 +55,7 @@ public class AddAdminUserTest extends BaseTest {
     public void loggingIn(){
         btnAdminModule=page.locator("a[href*='viewAdminModule']");
         loginPage.userLogin(configReader.getProperty("admin.username"),configReader.getProperty("admin.password"));
-        assertThat(page.locator("h6.oxd-topbar-header-breadcrumb-module:has-text('Dashboard')")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
+        assertThat(page.locator("h6.oxd-topbar-header-breadcrumb-module:has-text('Dashboard')")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(timeoutTime));
 
     }
 
@@ -67,7 +68,7 @@ public class AddAdminUserTest extends BaseTest {
         btnAdminModule.click();
         //page.pause();
         //System.out.println(employee_name);
-        assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("User Management"))).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
+        assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("User Management"))).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(timeoutTime));
         userManagementPage.fillDetails(userRole, employeeNameHint, employee_name, statusDropdown,user_Name, userpass, confirmpass);
     }
 
@@ -77,42 +78,55 @@ public class AddAdminUserTest extends BaseTest {
         pimPage.clickAddButton();
         pimPage.saveEmployeeDetails(employeeFirstName, "", employeeLastName, employeeCreationID);
 
-        assertThat(page.getByText(employeeFirstName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));;
+        assertThat(page.getByText(employeeFirstName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(timeoutTime));;
     }
 
-    @Test
+    @Test(
+            description = "TC-001: Adding a new admin user",
+            priority = 1
+    )
     public void addAdminUser(){ //Test 1: adding a new admin user
         adminCreation(userName, userPassword, userPassword);
         try {
-            page.getByText("exists").waitFor(new Locator.WaitForOptions().setTimeout(20000));
+            page.getByText("exists").waitFor(new Locator.WaitForOptions().setTimeout(timeoutTime));
             System.out.println("User " + userName + " already exists");
         } catch (com.microsoft.playwright.TimeoutError e) {
             // If it doesn't appear, just continue
         }
-        assertThat(page.getByText(userName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
+        assertThat(page.getByText(userName)).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(timeoutTime));
 
     }
 
-    @Test
+    @Test(
+            description ="TC-002: Adding an admin user that already exists",
+            priority = 2
+    )
     public void userAlreadyExist(){
         //Test 2: tests an existing user
         adminCreation(existingUserName, userPassword,userPassword);
-        assertThat(page.getByText("exists")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
+        assertThat(page.getByText("exists")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(timeoutTime));
     }
 
-    @Test
+    @Test(
+            description = "TC-003: Create admin, provide passwords that don't match",
+            priority = 3
+    )
     public void passwordNotMatching(){
         //Test3: tests passwords not matching
         adminCreation(userName, userPassword, "Newpass124");
-        assertThat(page.getByText("match")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(20000));
+        assertThat(page.getByText("match")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(timeoutTime));
 
     }
 
-    @Test(dataProvider = "emptyFieldProvider")
+    @Test(
+            dataProvider = "emptyFieldProvider",
+            description = "TC-004: Add admin, leave a mandatory field empty",
+            priority = 4
+    )
     public void validateEmptyFields(String role, String hint, String name, String status, String user, String pass, String confirm, String errorMsg) {
         //Test 4: tests for empty fields
         btnAdminModule.click();
-        assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("User Management"))).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(10000));
+        assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("User Management"))).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(timeoutTime));
         userManagementPage.fillDetails(role, hint, name, status,user, pass, confirm);
 
         //page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
