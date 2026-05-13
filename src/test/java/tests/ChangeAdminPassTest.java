@@ -35,7 +35,8 @@ public class ChangeAdminPassTest extends BaseTest {
         changeAdminPasswordPage.clickChangePassword();
     }
 
-    @Test
+    @Test(description = "TC_J_01 - Validate successful password change with valid current and new password",
+            groups = {"positive", "regression", "smoke"})
     public void changeAdminPasswordTest() {
 
         changeAdminPasswordPage.changePassword(
@@ -49,7 +50,8 @@ public class ChangeAdminPassTest extends BaseTest {
         );
     }
 
-    @Test
+    @Test(description = "TC_J_02 - Validate error message when incorrect current password is provided during password change",
+            groups = {"negative", "regression"})
     public void changePasswordWithWrongCurrentPassword() {
 
         changeAdminPasswordPage.changePassword(
@@ -63,7 +65,7 @@ public class ChangeAdminPassTest extends BaseTest {
         );
     }
 
-    @Test
+    @Test( description = "TC_J_03 - Validate error message when new password and confirm password do not match", groups = {"negative", "regression"})
     public void changePasswordWithMismatchedPasswords() {
 
         changeAdminPasswordPage.changePasswordMismatch(
@@ -78,7 +80,7 @@ public class ChangeAdminPassTest extends BaseTest {
         );
     }
 
-    @Test
+    @Test(description = "TC_J_04 - Validate required field errors when password change form is submitted with empty inputs", groups = {"negative", "regression"})
     public void changePasswordWithEmptyFields() {
 
         changeAdminPasswordPage.changePassword(
@@ -92,7 +94,7 @@ public class ChangeAdminPassTest extends BaseTest {
         );
     }
 
-    @Test
+    @Test(description = "TC_J_05 - Verify that system shows validation error when user enters a weak password during password change", groups = {"negative", "regression"})
     public void changePasswordWithWeakPassword() {
 
         changeAdminPasswordPage.changePassword(
