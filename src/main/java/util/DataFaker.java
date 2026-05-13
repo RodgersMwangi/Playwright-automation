@@ -24,7 +24,9 @@ public class DataFaker {
     public static String licenseExpiryDate = FAKER.regexify("202[7-9]-(0[1-9]|[12][0-9]|30)-(0[1-9]|1[0-2])");
 
 
-
+    public static String longId(){
+        return FAKER.number().digits(12);
+    }
     /*
     * How to use
     *
